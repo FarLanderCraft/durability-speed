@@ -4,7 +4,6 @@
   "package": "amymialee.durabilityspeed.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "AxeMixin",
     "PickaxeMixin",
     "SwordMixin",
     "ToolMixin"
