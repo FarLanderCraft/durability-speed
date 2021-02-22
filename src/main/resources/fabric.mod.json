@@ -12,6 +12,11 @@
     "issues": "https://discord.gg/P4dUsxv6An"
   },
   "environment": "*",
+  "entrypoints": {
+    "main": [
+      "amymialee.durabilityspeed.DurabilitySpeed"
+    ]
+  },
   "mixins": [
     "durabilityspeed.mixins.json"
   ],
