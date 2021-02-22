@@ -1,5 +1,6 @@
 package amymialee.durabilityspeed.mixin;
 
+import amymialee.durabilityspeed.DurabilitySpeed;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
@@ -22,9 +23,15 @@ public class PickaxeMixin extends MiningToolItem {
 
     @Inject(method = "getMiningSpeedMultiplier", at = @At("RETURN"), cancellable = true)
     private void getMiningSpeedMultiplier(ItemStack stack, BlockState state, CallbackInfoReturnable<Float> cir) {
-        Material material = state.getMaterial();
-        float multiplier = 1;
-        multiplier = (1 - ((float) stack.getDamage() / (float) stack.getMaxDamage())) * 2;
-        cir.setReturnValue(material != Material.METAL && material != Material.REPAIR_STATION && material != Material.STONE  ? super.getMiningSpeedMultiplier(stack, state) : this.miningSpeed * multiplier );
+        if (DurabilitySpeed.configGet.effectPickaxes) {
+            Material material = state.getMaterial();
+            float multiplier = 1;
+
+            multiplier = ((((float) stack.getDamage() / (float) stack.getMaxDamage())) *
+                    (DurabilitySpeed.configGet.maximumSpeed - DurabilitySpeed.configGet.minimumSpeed)) + DurabilitySpeed.configGet.minimumSpeed;
+
+            cir.setReturnValue(material != Material.METAL && material != Material.REPAIR_STATION && material != Material.STONE ?
+                    super.getMiningSpeedMultiplier(stack, state) : this.miningSpeed * multiplier);
+        }
     }
 }
