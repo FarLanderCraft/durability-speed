@@ -1,7 +1,5 @@
 package amymialee.durabilityspeed.mixin;
 
-import amymialee.durabilityspeed.DurabilityModConfig;
-import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
@@ -22,15 +20,11 @@ public class AxeMixin extends MiningToolItem {
         super(attackDamage, attackSpeed, material, effectiveBlocks, settings);
     }
 
-    public DurabilityModConfig config = AutoConfig.getConfigHolder(DurabilityModConfig.class).getConfig();
-
     @Inject(method = "getMiningSpeedMultiplier", at = @At("RETURN"), cancellable = true)
     private void getMiningSpeedMultiplier(ItemStack stack, BlockState state, CallbackInfoReturnable<Float> cir) {
-        if (config.effectAxes) {
-            Material material = state.getMaterial();
-            float multiplier = 1;
-            multiplier = ((1 - ((float) stack.getDamage() / (float) stack.getMaxDamage())) * (config.maximumSpeed - config.minimumSpeed)) + config.minimumSpeed;
-            cir.setReturnValue(field_23139.contains(material) ? this.miningSpeed * multiplier : super.getMiningSpeedMultiplier(stack, state));
-        }
+        Material material = state.getMaterial();
+        float multiplier = 1;
+        multiplier = (1 - ((float) stack.getDamage() / (float) stack.getMaxDamage())) * 2;
+        cir.setReturnValue(field_23139.contains(material) ? this.miningSpeed * multiplier : super.getMiningSpeedMultiplier(stack, state));
     }
 }
