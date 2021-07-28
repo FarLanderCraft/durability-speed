@@ -12,4 +12,3 @@ public class DurabilitySpeed implements ModInitializer {
         configGet = AutoConfig.getConfigHolder(DurabilityModConfig.class).getConfig();
     }
 }
-

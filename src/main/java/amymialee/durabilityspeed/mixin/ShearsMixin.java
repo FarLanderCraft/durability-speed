@@ -3,18 +3,19 @@ package amymialee.durabilityspeed.mixin;
 import amymialee.durabilityspeed.DurabilitySpeed;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.Material;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ShearsItem;
 import net.minecraft.tag.BlockTags;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(SwordItem.class)
-public class SwordMixin extends ToolItem {
-    public SwordMixin(ToolMaterial material, Settings settings) {
-        super(material, settings);
+@Mixin(ShearsItem.class)
+public class ShearsMixin extends Item {
+    public ShearsMixin(Settings settings) {
+        super(settings);
     }
 
     @Inject(method = "getMiningSpeedMultiplier", at = @At("RETURN"), cancellable = true)
@@ -22,11 +23,11 @@ public class SwordMixin extends ToolItem {
         if (DurabilitySpeed.configGet.modEnabled) {
             float multiplier = ((1 - ((float) stack.getDamage() / (float) stack.getMaxDamage())) *
                     DurabilitySpeed.configGet.maximumSpeed - DurabilitySpeed.configGet.minimumSpeed) + DurabilitySpeed.configGet.minimumSpeed;
-            if (state.isOf(Blocks.COBWEB)) {
-                cir.setReturnValue(15.0F * multiplier);
+
+            if (!state.isOf(Blocks.COBWEB) && !state.isIn(BlockTags.LEAVES)) {
+                cir.setReturnValue(state.isIn(BlockTags.WOOL) ? 5.0F * multiplier : super.getMiningSpeedMultiplier(stack, state));
             } else {
-                Material material = state.getMaterial();
-                cir.setReturnValue(material != Material.PLANT && material != Material.REPLACEABLE_PLANT && !state.isIn(BlockTags.LEAVES) && material != Material.GOURD ? 1.0F : 1.5F * multiplier);
+                cir.setReturnValue(15.0F * multiplier);
             }
         }
     }
