@@ -23,6 +23,7 @@ public class DurabilitySpeed implements ModInitializer {
                 config = daData.fromJson(new String(Files.readAllBytes(configPath)), DurabilityModConfig.class);
             } else {
                 Files.write(configPath, Collections.singleton(daData.toJson(daDataForReal)));
+                config = daDataForReal;
             }
         } catch (IOException e) {
             e.printStackTrace();
