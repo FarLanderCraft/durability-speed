@@ -25,7 +25,7 @@
   ],
   "depends": {
     "fabricloader": "*",
-    "minecraft": "1.8.X"
+    "minecraft": "1.7.X"
   },
   "custom": {
     "modmenu": {

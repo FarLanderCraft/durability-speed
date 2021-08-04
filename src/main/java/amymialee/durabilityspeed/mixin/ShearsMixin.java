@@ -2,7 +2,6 @@ package amymialee.durabilityspeed.mixin;
 
 import amymialee.durabilityspeed.DurabilitySpeed;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -20,7 +19,7 @@ public class ShearsMixin extends Item {
     private void getMiningSpeedMultiplier(ItemStack stack, Block block, CallbackInfoReturnable<Float> cir) {
         if (DurabilitySpeed.config.modEnabled) {
             float multiplier = ((1 - ((float) stack.getDamage() / (float) stack.getMaxDamage())) * DurabilitySpeed.config.maximumSpeed - DurabilitySpeed.config.minimumSpeed) + DurabilitySpeed.config.minimumSpeed;
-            if (!(block == Blocks.COBWEB) && !(block == Blocks.LEAVES) && !(block == Blocks.LEAVES2)) {
+            if (!(block == Blocks.WEB) && !(block == Blocks.LEAVES) && !(block == Blocks.LEAVES2)) {
                 cir.setReturnValue(block == Blocks.WOOL ? 5.0F * multiplier : super.getMiningSpeedMultiplier(stack, block));
             } else {
                 cir.setReturnValue(15.0F * multiplier);

@@ -2,7 +2,6 @@ package amymialee.durabilityspeed.mixin;
 
 import amymialee.durabilityspeed.DurabilitySpeed;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.item.*;
@@ -20,7 +19,7 @@ public class SwordMixin extends Item {
         if (DurabilitySpeed.config.modEnabled) {
             float multiplier = ((1 - ((float) stack.getDamage() / (float) stack.getMaxDamage())) *
                     DurabilitySpeed.config.maximumSpeed - DurabilitySpeed.config.minimumSpeed) + DurabilitySpeed.config.minimumSpeed;
-            if (block == Blocks.COBWEB) {
+            if (block == Blocks.WEB) {
                 cir.setReturnValue(15.0F * multiplier);
             } else {
                 Material material = block.getMaterial();
