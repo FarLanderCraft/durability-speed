@@ -5,13 +5,14 @@
   "name": "Durability Speed",
   "description": "Mod that makes tool effectiveness scale with durability.",
   "authors": [
-    "AmyMialee"
+    "AmyMialee",
+    "PseudoDistant"
   ],
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/durability-speed",
     "issues": "https://discord.gg/P4dUsxv6An"
   },
-  "license": "GPL-3.0",
+  "license": "LGPL-3.0",
   "icon": "assets/durabilityspeed/icon.png",
   "environment": "*",
   "entrypoints": {
@@ -25,7 +26,7 @@
   "depends": {
     "fabricloader": "*",
     "fabric": "*",
-    "minecraft": "*",
+    "minecraft": ">=1.18",
     "cloth-config2": "*"
   },
   "custom": {

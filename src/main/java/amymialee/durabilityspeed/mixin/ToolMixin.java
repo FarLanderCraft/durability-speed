@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.MiningToolItem;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.tag.Tag;
+import net.minecraft.tag.TagKey;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -16,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(MiningToolItem.class)
 public abstract class ToolMixin {
-    @Shadow @Final private Tag<Block> effectiveBlocks;
+    @Shadow @Final private TagKey<Block> effectiveBlocks;
 
     @Shadow @Final protected float miningSpeed;
 
@@ -25,7 +26,7 @@ public abstract class ToolMixin {
         if (DurabilitySpeed.configGet.modEnabled) {
             float multiplier = ((1 - ((float) stack.getDamage() / (float) stack.getMaxDamage())) *
                     DurabilitySpeed.configGet.maximumSpeed - DurabilitySpeed.configGet.minimumSpeed) + DurabilitySpeed.configGet.minimumSpeed;
-            cir.setReturnValue(this.effectiveBlocks.contains(state.getBlock()) ? this.miningSpeed * multiplier : 1.0F);
+            cir.setReturnValue(state.isIn(this.effectiveBlocks) ? this.miningSpeed * multiplier : 1.0F);
         }
     }
 }
